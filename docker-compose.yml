@@ -1,0 +1,30 @@
+services:
+  client:
+    container_name: FrontEnd
+    build: 
+      dockerfile: .client/Dockerfile
+      args:
+        - REACT_APP_UI_URL=http://localhost:3000
+        # - REACT_APP_UI_WS
+    networks:
+      - audio-hosting-networks
+    ports:
+      -3000:8000
+
+  server:
+    container_name: Backend
+    build:
+      dockerfile: .server/Dockerfile
+    networks:
+      - audio-hosting-networks
+    ports:
+      -5000:5000
+
+  database:
+    container_name: mongo-db
+    image: mongo:5.0-focal
+    networks:
+      - audio-hosting-networks
+    ports:
+      -27017:27017
+
